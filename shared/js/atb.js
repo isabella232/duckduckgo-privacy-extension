@@ -150,7 +150,7 @@ var ATB = (() => {
         },
 
         getSurveyURL: () => {
-            let url = 'https://goodmorningprivacy.com/thanks'
+            let url = 'https://goodmorningprivacy.com/?post=thanks'
             let atb = settings.getSetting('atb')
             let set_atb = settings.getSetting('set_atb')
             if (atb) url += `&atb=${atb}`
