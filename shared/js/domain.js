@@ -4,8 +4,9 @@ class Domain {
         this.trackers = new Set([]);
     };
 
-    addTrackers(tracker) {
-        this.trackers.add(tracker);
+    addTrackers(trackers) {
+        const newSet = new Set(trackers);
+        this.trackers = new Set([this.trackers, newSet]);
     };
 
     get(property) {

@@ -6,10 +6,6 @@ const Domains = (() => {
     let totalDomainsWithTrackers = 0;
     let lastDomainResetDate = null;
 
-    function sortByTrackers(a, b) {
-        return domainContainer[b].trackers.size - domainContainer[a].trackers.size
-    }
-
     return {
         get: (name) => {
             return domainContainer[name]
@@ -20,16 +16,18 @@ const Domains = (() => {
         },
 
         getTrackersPerDomain: () => {
-            return domainContainer.reduce(function (res, obj) {
-                return res + obj.trackers.size;
+            return Domains.all().reduce(function (res, k) {
+                return res + domainContainer[k].trackers.size;
             }, 0) / Domains.getTotalDomains()
         },
 
-        add: (name, tracker) => {
+        add: (name, trackers) => {
             if (!domainContainer[name]) {
                 domainContainer[name] = new Domain(name)
             }
-            domainContainer[name].addTrackers(tracker);
+            if (trackers !== undefined) {
+                domainContainer[name].addTrackers(trackers);
+            }
             return domainContainer[name]
         },
 
@@ -39,12 +37,12 @@ const Domains = (() => {
 
         getTopByTrackers: (n) => {
             const topTrackedData = [];
-            domainContainer.sort(function (a, b) {
-                return b.trackers.length - a.trackers.length
+            Domains.all().sort(function (a, b) {
+                return domainContainer[b].trackers.size - domainContainer[a].trackers.size
             }).slice(n).forEach((c) => {
                 topTrackedData.push({
-                    name: c.name,
-                    trackers: c.trackers.length
+                    name: domainContainer[c].name,
+                    trackers: domainContainer[c].trackers.size
                 })
             });
 
@@ -73,12 +71,6 @@ const Domains = (() => {
         },
 
         getLastResetDate: () => lastDomainResetDate,
-
-        // TODO
-        incrementTotalDomains: () => {
-            totalDomains += 1;
-            Domains.syncToStorage()
-        },
 
         syncToStorage: () => {
             const toSync = {};

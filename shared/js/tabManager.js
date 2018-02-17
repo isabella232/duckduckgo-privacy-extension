@@ -103,10 +103,16 @@ chrome.tabs.onUpdated.addListener( (id, info) => {
 
                     if (tab.trackers && Object.keys(tab.trackers).length > 0) {
                         Companies.incrementTotalPagesWithTrackers()
+                        Domains.add(tab.site.domain, Object.keys(tab.trackers))
+                    } else {
+                        Domains.add(tab.site.domain, undefined)
                     }
+
 
                     Companies.incrementTotalPages()
                     tab.site.didIncrementCompaniesData = true
+
+                    console.log(Domains.getTopByTrackers())
                 }
 
                 if (tab.statusCode === 200) tab.endStopwatch()
