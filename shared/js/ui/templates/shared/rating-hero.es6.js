@@ -7,11 +7,7 @@ module.exports = function (site, ops) {
     site.siteRating,
     site.isWhitelisted
   )
-  const subtitle = siteRatingSubtitle(
-    site.isCalculatingSiteRating,
-    site.siteRating,
-    site.isWhitelisted
-  )
+  const subtitle = bel`Domain added to your report`
 
   return bel`<div class="rating-hero-container js-rating-hero">
      ${hero({
@@ -45,20 +41,20 @@ function siteRatingStatus (isCalculating, rating, isWhitelisted) {
   return status + isActive
 }
 
-function siteRatingSubtitle (isCalculating, rating, isWhitelisted) {
-  let isActive = true
-  if (isWhitelisted) isActive = false
-  // deal with other states
-  let msg = 'Privacy Grade'
-  // site is whitelisted
-  if (!isActive) {
-    msg = `Privacy Protection Disabled`
-  // "null" state (empty tab, browser's "about:" pages)
-  } else if (!isCalculating && !rating.before && !rating.after) {
-    msg = `We only grade regular websites`
-  // rating is still calculating
-  } else if (isCalculating) {
-    msg = `Calculating...`
-  }
-  return bel`${msg}`
-}
+// function siteRatingSubtitle (isCalculating, rating, isWhitelisted) {
+//   let isActive = true
+//   if (isWhitelisted) isActive = false
+//   // deal with other states
+//   let msg = 'Privacy Grade'
+//   // site is whitelisted
+//   if (!isActive) {
+//     msg = `Privacy Protection Disabled`
+//   // "null" state (empty tab, browser's "about:" pages)
+//   } else if (!isCalculating && !rating.before && !rating.after) {
+//     msg = `We only grade regular websites`
+//   // rating is still calculating
+//   } else if (isCalculating) {
+//     msg = `Calculating...`
+//   }
+//   return bel`${msg}`
+// }

@@ -131,15 +131,16 @@ chrome.tabs.onUpdated.addListener((id, info) => {
     }
 });
 
-chrome.runtime.onMessage.addListener((req, sender, res) => {
-    if (req.getTopBlocked) {
-        res(Domains.getTopBlocked(req.getTopBlocked))
-    } else if (req.getTopBlockedByPages) {
-        res(Domains.getTopBlockedByPages(req.getTopBlockedByPages))
-    } else if (req.resetTrackersData) {
-        Domains.resetData();
-        chrome.runtime.sendMessage({'didResetTrackersData': Domains.getLastResetDate()});
-        res()
-    }
-    return true
-});
+// TODO. Rewire for domains
+// chrome.runtime.onMessage.addListener((req, sender, res) => {
+//     if (req.getTopBlocked) {
+//         res(Domains.getTopBlocked(req.getTopBlocked))
+//     } else if (req.getTopBlockedByPages) {
+//         res(Domains.getTopBlockedByPages(req.getTopBlockedByPages))
+//     } else if (req.resetTrackersData) {
+//         Domains.resetData();
+//         chrome.runtime.sendMessage({'didResetTrackersData': Domains.getLastResetDate()});
+//         res()
+//     }
+//     return true
+// });
