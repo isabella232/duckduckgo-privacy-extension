@@ -78,7 +78,8 @@
         "storage",
         "<all_urls>",
         "alarms",
-        "identity"
+        "identity",
+        "identity.email"
     ],
     "web_accessible_resources": [
         "img/*"

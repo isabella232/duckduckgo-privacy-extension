@@ -42,88 +42,94 @@ chrome.runtime.onMessage.addListener((req, sender, res) => {
 });
 
 function Background() {
-  $this = this;
+    $this = this;
 
-  // clearing last search on browser startup
-  settings.updateSetting('last_search', '')
+    // clearing last search on browser startup
+    settings.updateSetting('last_search', '')
 
-  var os = "o";
-  if (window.navigator.userAgent.indexOf("Windows") != -1) os = "w";
-  if (window.navigator.userAgent.indexOf("Mac") != -1) os = "m";
-  if (window.navigator.userAgent.indexOf("Linux") != -1) os = "l";
+    var os = "o";
+    if (window.navigator.userAgent.indexOf("Windows") != -1) os = "w";
+    if (window.navigator.userAgent.indexOf("Mac") != -1) os = "m";
+    if (window.navigator.userAgent.indexOf("Linux") != -1) os = "l";
 
-  localStorage['os'] = os;
+    localStorage['os'] = os;
 
-  chrome.tabs.query({currentWindow: true, status: 'complete'}, function(savedTabs){
-      for (var i = 0; i < savedTabs.length; i++){
-          var tab = savedTabs[i];
+    chrome.tabs.query({currentWindow: true, status: 'complete'}, function(savedTabs){
+        for (var i = 0; i < savedTabs.length; i++){
+            var tab = savedTabs[i];
 
-          if (tab.url) {
-              let newTab = tabManager.create(tab);
-              // check https status of saved tabs so we have the correct site score
-              if (newTab.url.match(/^https:\/\//)) {
-                  newTab.site.score.update({hasHTTPS: true})
-              }
-          }
-      }
-  });
-
-  chrome.runtime.onInstalled.addListener(function(details) {
-
-      /* Textile TODO:
-
-      We need to run the following at some point here,
-
-      chrome.identity.getAuthToken({'interactive': false}, function (token) {
-          console.log(token)
-      })
-
-      if we don't have user email in the settings, but perhaps we can always do it cause I think it will
-      just return the token without the interactive ui oauth step if the user has already done that (authorized us).
-
-      NOTE: waiting on the private web extension to pass google chrome store so that i can get the right "app key" and
-      add that to the manifest.json file. Without that, the above getAuthToken request fails cause the app ids
-      dont match.
-
-      PENDING EXTENSION: https://chrome.google.com/webstore/detail/ndphnolegaihkhjmfdbafgkgcemhmmgc/publish-delayed
-
-      - not sure how this will work in firefox, maybe we can only do this in chrome
-      - show the post-install page with a way for them to add email if the above fails
-
-      */
-
-    // only run the following section on install and on update
-    if (details.reason.match(/install|update/)) {
-        ATB.onInstalled();
-    }
-
-    // only show post install page on install if:
-    // - the user wasn't already looking at the app install page
-    // - the user hasn't seen the page before
-    if (details.reason.match(/install/)) {
-        settings.ready().then( () => {
-            chrome.tabs.query({currentWindow: true, active: true}, function(tabs) { 
-                const domain = (tabs && tabs[0]) ? tabs[0].url : ''
-                const regExpPostInstall = new RegExp('duckduckgo\.com\/app')
-                if ((!settings.getSetting('hasSeenPostInstall')) && (!domain.match(regExpPostInstall))) {
-                    settings.updateSetting('hasSeenPostInstall', true)
-                    chrome.tabs.create({
-                        url: 'https://goodmorningprivacy.com/?post=welcome'
-                    })
+            if (tab.url) {
+                let newTab = tabManager.create(tab);
+                // check https status of saved tabs so we have the correct site score
+                if (newTab.url.match(/^https:\/\//)) {
+                    newTab.site.score.update({hasHTTPS: true})
                 }
+            }
+        }
+    });
+
+    chrome.runtime.onInstalled.addListener(function(details) {
+
+        chrome.identity.getAuthToken({'interactive': true}, function () {
+            chrome.identity.getProfileUserInfo(function (info) {
+                console.log(info) // info.email is email
             })
         })
-    }
 
-    // blow away old indexeddbs that might be there
-    if (details.reason.match(/update/) && window.indexedDB) {
-        const ms = 1000 * 60
-        setTimeout(() => window.indexedDB.deleteDatabase('ddgExtension'), ms)
-    }
+        /* Textile TODO:
 
-    // remove legacy/unused `HTTPSwhitelisted` setting
-    settings.ready().then(settings.removeSetting('HTTPSwhitelisted'))
-  })
+        We need to run the following at some point here,
+
+        chrome.identity.getAuthToken({'interactive': false}, function (token) {
+            console.log(token)
+        })
+
+        if we don't have user email in the settings, but perhaps we can always do it cause I think it will
+        just return the token without the interactive ui oauth step if the user has already done that (authorized us).
+
+        NOTE: waiting on the private web extension to pass google chrome store so that i can get the right "app key" and
+        add that to the manifest.json file. Without that, the above getAuthToken request fails cause the app ids
+        dont match.
+
+        PENDING EXTENSION: https://chrome.google.com/webstore/detail/ndphnolegaihkhjmfdbafgkgcemhmmgc/publish-delayed
+
+        - not sure how this will work in firefox, maybe we can only do this in chrome
+        - show the post-install page with a way for them to add email if the above fails
+
+        */
+
+        // only run the following section on install and on update
+        // if (details.reason.match(/install|update/)) {
+        //     ATB.onInstalled();
+        // }
+
+        // only show post install page on install if:
+        // - the user wasn't already looking at the app install page
+        // - the user hasn't seen the page before
+        // if (details.reason.match(/install/)) {
+        //     settings.ready().then( () => {
+        //         chrome.tabs.query({currentWindow: true, active: true}, function(tabs) {
+        //             const domain = (tabs && tabs[0]) ? tabs[0].url : ''
+        //             const regExpPostInstall = new RegExp('duckduckgo\.com\/app')
+        //             if ((!settings.getSetting('hasSeenPostInstall')) && (!domain.match(regExpPostInstall))) {
+        //                 settings.updateSetting('hasSeenPostInstall', true)
+        //                 chrome.tabs.create({
+        //                     url: 'https://goodmorningprivacy.com/?post=welcome'
+        //                 })
+        //             }
+        //         })
+        //     })
+        // }
+
+        // blow away old indexeddbs that might be there
+        if (details.reason.match(/update/) && window.indexedDB) {
+            const ms = 1000 * 60
+            setTimeout(() => window.indexedDB.deleteDatabase('ddgExtension'), ms)
+        }
+
+        // remove legacy/unused `HTTPSwhitelisted` setting
+        settings.ready().then(settings.removeSetting('HTTPSwhitelisted'))
+    })
 }
 
 var background
@@ -175,8 +181,8 @@ chrome.webRequest.onBeforeRequest.addListener(
              */
             if (thisTab.site.isBroken) {
                 console.log('temporarily skip tracker blocking for site: '
-                  + utils.extractHostFromURL(thisTab.url) + '\n'
-                  + 'more info: https://github.com/duckduckgo/content-blocking-whitelist')
+                    + utils.extractHostFromURL(thisTab.url) + '\n'
+                    + 'more info: https://github.com/duckduckgo/content-blocking-whitelist')
                 return
             }
 
@@ -223,7 +229,7 @@ chrome.webRequest.onBeforeRequest.addListener(
                     }
 
                     console.info( "blocked " + utils.extractHostFromURL(thisTab.url)
-                                 + " [" + tracker.parentCompany + "] " + requestData.url);
+                        + " [" + tracker.parentCompany + "] " + requestData.url);
 
                     // return surrogate redirect if match, otherwise
                     // tell Chrome to cancel this webrequest
@@ -242,13 +248,13 @@ chrome.webRequest.onBeforeRequest.addListener(
          * If an upgrade rule is found, request is upgraded from http to https
          */
 
-         if (!thisTab.site) return
+        if (!thisTab.site) return
 
         // Skip https upgrade on broken sites
         if (thisTab.site.isBroken) {
             console.log('temporarily skip https upgrades for site: '
-                  + utils.extractHostFromURL(thisTab.url) + '\n'
-                  + 'more info: https://github.com/duckduckgo/content-blocking-whitelist')
+                + utils.extractHostFromURL(thisTab.url) + '\n'
+                + 'more info: https://github.com/duckduckgo/content-blocking-whitelist')
             return
         }
 
@@ -268,9 +274,9 @@ chrome.webRequest.onBeforeRequest.addListener(
         const isMainFrame = requestData.type === 'main_frame' ? true : false
 
         if (isMainFrame &&
-                thisTab.lastHttpsUpgrade &&
-                thisTab.lastHttpsUpgrade.url === requestData.url &&
-                Date.now() - thisTab.lastHttpsUpgrade.time < 3000) {
+            thisTab.lastHttpsUpgrade &&
+            thisTab.lastHttpsUpgrade.url === requestData.url &&
+            Date.now() - thisTab.lastHttpsUpgrade.time < 3000) {
 
             console.log('already tried upgrading this url on this tab a few moments ago ' +
                 'and it didn\'t complete successfully, abort:\n' +
@@ -292,7 +298,7 @@ chrome.webRequest.onBeforeRequest.addListener(
             }
             return {redirectUrl: url}
         } else {
-          return
+            return
         }
     },
     {
@@ -305,7 +311,7 @@ chrome.webRequest.onBeforeRequest.addListener(
 );
 
 chrome.webRequest.onHeadersReceived.addListener(
-        ATB.updateSetAtb,
+    ATB.updateSetAtb,
     {
         urls: [
             '*://duckduckgo.com/?*',

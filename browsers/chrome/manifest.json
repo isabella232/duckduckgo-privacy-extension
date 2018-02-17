@@ -73,8 +73,10 @@
         "storage",
         "<all_urls>",
         "alarms",
-        "identity"
+        "identity",
+        "identity.email"
     ],
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkWrnhoV/r+Ann9qju5c341dTqLh1Js/iV23rEI55KLfl4kuBHsKF/2yb5UZp7tOsD8z1xG/39CBIg+2PFdyRw6TQ6hh8oaBWB7Rnqa6X+CoV5MFqNb/AvgIxNpakTSH5PRxPAEQFOkhRRfbLbHpCzYJTyZVC+LKyIdTDI8A3MN1VoXv2gHQt38lxnsYBbOzmvs9Mu4ga/fP0s6CC41HIISlRVC3gi7/qW+eFKqKoqKz4j+xPhPBIZ4f0S479WLvN4AJp4bueQFhaNWjvnrxj0zZnpj6s+3ebZLlOY0nFdHp62s8vgOb1xJRVGraJcdzYqtwZsbJboq5AWJR41z4E8wIDAQAB",
     "oauth2": {
         "client_id": "932480673761-aaticsb0qtdb1t4pl4oq6dak4dp7b48m.apps.googleusercontent.com",
         "scopes": [
