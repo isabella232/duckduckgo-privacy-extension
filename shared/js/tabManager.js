@@ -112,8 +112,6 @@ chrome.tabs.onUpdated.addListener( (id, info) => {
                     Companies.incrementTotalPages()
                     Domains.syncToStorage()
                     tab.site.didIncrementCompaniesData = true
-
-                    console.log(Domains.getTopByTrackers())
                 }
 
                 if (tab.statusCode === 200) tab.endStopwatch()
