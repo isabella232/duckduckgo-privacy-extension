@@ -33,11 +33,11 @@ function siteRatingStatus (isCalculating, rating, isWhitelisted) {
   } else if (rating && rating.before) {
     isActive = isWhitelisted ? '' : '--active'
 
-    if (isActive && rating.after) {
-      status = rating.after.toLowerCase()
-    } else {
-      status = rating.before.toLowerCase()
-    }
+    // if (isActive && rating.after) {
+    //   status = rating.after.toLowerCase()
+    // } else {
+    status = rating.before.toLowerCase()
+    // }
   } else {
     status = 'null'
   }

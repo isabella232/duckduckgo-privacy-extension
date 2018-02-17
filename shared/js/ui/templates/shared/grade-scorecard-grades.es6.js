@@ -14,7 +14,7 @@ function getGrades (rating, isWhitelisted) {
   // transform site ratings into grades
   // that the template can display more easily
   const before = rating.before
-  const after = rating.after
+  // const after = rating.after
 
   let grades = []
 
@@ -23,13 +23,13 @@ function getGrades (rating, isWhitelisted) {
     modifier: before.toLowerCase()
   })
 
-  if (before !== after && !isWhitelisted) {
-    grades.push({
-      msg: 'Enhanced Grade',
-      modifier: after.toLowerCase(),
-      highlight: true
-    })
-  }
+  // if (before !== after && !isWhitelisted) {
+  //   grades.push({
+  //     msg: 'Enhanced Grade',
+  //     modifier: after.toLowerCase(),
+  //     highlight: true
+  //   })
+  // }
 
   return grades
 }
