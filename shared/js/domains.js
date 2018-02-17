@@ -18,7 +18,7 @@ const Domains = (() => {
         getTrackersPerDomain: () => {
             return Domains.all().reduce(function (res, k) {
                 return res + domainContainer[k].trackers.size;
-            }, 0) / Domains.getTotalDomains()
+            }, 0) / Object.keys(domainContainer).length
         },
 
         add: (name, trackers) => {
@@ -39,12 +39,12 @@ const Domains = (() => {
         getTopByTrackers: (n) => {
             const topTrackedData = [];
             Domains.all().sort(function (a, b) {
-                return domainContainer[b].trackers.size - domainContainer[a].trackers.size
+                return domainContainer[b].size() - domainContainer[a].size()
             }).slice(n).forEach((c) => {
                 topTrackedData.push({
                     name: domainContainer[c].name,
                     pagesViewed: domainContainer[c].pagesViewed,
-                    trackers: domainContainer[c].trackers.size
+                    trackers: domainContainer[c].size()
                 })
             });
 

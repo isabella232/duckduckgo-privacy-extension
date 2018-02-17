@@ -2,18 +2,22 @@ class Domain {
     constructor(name) {
         this.name = name;
         this.pagesViewed = 0;
-        this.trackers = new Set([]);
+        this.trackers = {};
     };
 
     addTrackers(trackers) {
-        const newSet = new Set(trackers);
-        this.trackers = new Set([this.trackers, newSet]);
+        for (var t in trackers) {
+            this.trackers[trackers[t]] = 1
+        }
     };
 
     incrementPagesViewed(){
         this.pagesViewed += 1;
     };
 
+    size() {
+        return Object.keys(this.trackers).length
+    }
     get(property) {
         return this[property];
     };
