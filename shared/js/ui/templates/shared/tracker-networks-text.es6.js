@@ -5,7 +5,7 @@ module.exports = function (site, isMajorNetworksCount, includeUniqueTrackersCoun
 
   let trackersText = isMajorNetworksCount ? ' Major Tracker' : ' Tracker'
   trackersText += (trackerNetworksCount === 1) ? ' Network ' : ' Networks '
-  let finalText = trackerNetworksCount + trackersText + trackersBlockedOrFound(site, trackerNetworksCount)
+  let finalText = trackerNetworksCount + trackersText + 'Found'
 
   if (includeUniqueTrackersCount && trackerNetworksCount > 0) {
     const uniqueTrackersText = site.trackersCount === 1 ? ' Unique Tracker In ' : ' Unique Trackers In '
@@ -15,13 +15,3 @@ module.exports = function (site, isMajorNetworksCount, includeUniqueTrackersCoun
   return bel`${finalText}`
 }
 
-function trackersBlockedOrFound (site, trackerNetworksCount) {
-  let msg = ''
-  if (site && (site.isWhitelisted || trackerNetworksCount === 0)) {
-    msg = 'Found'
-  } else {
-    msg = 'Blocked'
-  }
-
-  return bel`${msg}`
-}
