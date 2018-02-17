@@ -14,6 +14,7 @@ require.scopes.email = ( () => {
 
             var payload = {
                 companyData: result.companyData,
+                domainData: result.totalDomains,
                 totalPages: result.totalPages,
                 totalPagesWithTrackers: result.totalPagesWithTrackers
             }

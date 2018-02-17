@@ -28,6 +28,7 @@ const Domains = (() => {
             if (trackers !== undefined) {
                 domainContainer[name].addTrackers(trackers);
             }
+            companyContainer[name].incrementPagesViewed()
             return domainContainer[name]
         },
 
@@ -42,6 +43,7 @@ const Domains = (() => {
             }).slice(n).forEach((c) => {
                 topTrackedData.push({
                     name: domainContainer[c].name,
+                    pagesViewed: domainContainer[c].pagesViewed,
                     trackers: domainContainer[c].trackers.size
                 })
             });
