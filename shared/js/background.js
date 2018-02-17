@@ -218,7 +218,8 @@ chrome.webRequest.onBeforeRequest.addListener(
 
                     if (tracker.parentCompany !== 'unknown' && thisTab.statusCode === 200){
                         Companies.add(tracker.parentCompany)
-                    }
+                        Domains.add(thisTab.site, tracker.parentCompany)
+                    } 
 
                     // for debugging specific requests. see test/tests/debugSite.js
                     if (debugRequest && debugRequest.length) {
