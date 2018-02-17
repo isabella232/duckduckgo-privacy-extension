@@ -28,7 +28,7 @@ const Domains = (() => {
             if (trackers !== undefined) {
                 domainContainer[name].addTrackers(trackers);
             }
-            companyContainer[name].incrementPagesViewed()
+            domainContainer[name].incrementPagesViewed()
             return domainContainer[name]
         },
 

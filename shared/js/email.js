@@ -12,6 +12,7 @@ require.scopes.email = ( () => {
 
         chrome.storage.local.get(function (result) {
 
+            console.log(result.totalDomains)
             var payload = {
                 companyData: result.companyData,
                 domainData: result.totalDomains,
