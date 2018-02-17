@@ -5,10 +5,10 @@
     cursor: pointer;
 }
 
-.hero__icon {
-    @include icon_display();
-    margin-top: 15px;
-}
+//.hero__icon {
+//    @include icon_display();
+//    margin-top: 15px;
+//}
 
 .hero__title {
     line-height: 17px;
