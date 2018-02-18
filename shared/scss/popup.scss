@@ -34,7 +34,7 @@ body {
     }
 
     .site-info--placeholder {
-        height: 250px;
+        height: 125px;
     }
 
     .site-info {
@@ -497,4 +497,4 @@ body {
 
 
 /* Sliding subviews */
-@include sliding_subview();
+//@include sliding_subview();

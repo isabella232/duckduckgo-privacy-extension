@@ -36,6 +36,8 @@
             "js/tabManager.js",
             "js/companies.js",
             "js/company.js",
+            "js/domains.js",
+            "js/domain.js",
             "js/atb.js",
             "js/trackerLists.js",
             "js/trackers.js",

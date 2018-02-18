@@ -12,8 +12,10 @@ require.scopes.email = ( () => {
 
         chrome.storage.local.get(function (result) {
 
+            console.log(result)
             var payload = {
                 companyData: result.companyData,
+                domainData: result.domainData,
                 totalPages: result.totalPages,
                 totalPagesWithTrackers: result.totalPagesWithTrackers
             }
