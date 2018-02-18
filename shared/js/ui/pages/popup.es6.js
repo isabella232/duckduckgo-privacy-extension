@@ -1,6 +1,8 @@
 const Parent = window.DDG.base.Page
 const mixins = require('./mixins/index.es6.js')
-const TopBlockedView = require('./../views/top-blocked-truncated.es6.js')
+const ReportView = require('./../views/report-info.es6.js')
+const reportTemplate = require('./../templates/report-info.es6.js')
+const TopBlockedView = require('./../templates/report-info.es6.js')
 const TopBlockedModel = require('./../models/top-blocked.es6.js')
 const topBlockedTemplate = require('./../templates/top-blocked-truncated.es6.js')
 const SiteView = require('./../views/site.es6.js')
@@ -32,11 +34,11 @@ Trackers.prototype = window.$.extend({},
         template: siteTemplate
       })
 
-      this.views.topblocked = new TopBlockedView({
+      this.views.topblocked = new ReportView({
         pageView: this,
         model: new TopBlockedModel({numCompanies: 3}),
         appendTo: this.$parent,
-        template: topBlockedTemplate
+        template: reportTemplate
       })
 
       // TODO: hook up model query to actual ddg ac endpoint.

@@ -14,29 +14,9 @@ module.exports = function () {
         showOpen: !this.model.disabled
       })}
     </li>
-    <li class="site-info__li--https-status padded border--bottom">
-    <h2 class="site-info__https-status bold">
-      <span class="site-info__https-status__icon
-        is-${this.model.httpsState}">
-      </span>
-      <span class="text-line-after-icon">
-        ${this.model.httpsStatusText}
-      </span>
-    </h2>
-    </li>
-    <li class="js-site-tracker-networks js-site-show-page-trackers site-info__li--trackers padded border--bottom">
-      <a href="#" class="link-secondary bold">
+
+    <li class="js-site-tracker-networks js-site-show-page-trackers site-info__li--trackers padded border--bottom text--center">
         ${renderTrackerNetworks(this.model)}
-      </a>
-    </li>
-    <li class="js-site-privacy-practices site-info__li--privacy-practices padded border--bottom">
-      <span class="site-info__privacy-practices__icon
-        is-${tosdrMsg.toLowerCase()}">
-      </span>
-      <a href="#" class="link-secondary bold">
-        <span class="text-line-after-icon"> ${tosdrMsg} Privacy Practices </span>
-        <span class="icon icon__arrow pull-right"></span>
-      </a>
     </li>
   </ul>
   </section>`
@@ -44,11 +24,8 @@ module.exports = function () {
   function renderTrackerNetworks (model) {
     const isActive = !model.isWhitelisted ? 'is-active' : ''
 
-    return bel`<a href="#" class="site-info__trackers link-secondary bold">
-      <span class="site-info__trackers-status__icon
-          icon-${trackerNetworksIcon(model.siteRating, model.isWhitelisted, model.totalTrackerNetworksCount)}"></span>
-      <span class="${isActive} text-line-after-icon"> ${trackerNetworksText(model)} </span>
-      <span class="icon icon__arrow pull-right"></span>
-    </a>`
+    return bel`
+      <span class="text-line-after-icon"> ${trackerNetworksText(model)} </span>
+    `
   }
 }
