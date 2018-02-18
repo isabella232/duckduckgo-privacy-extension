@@ -5,13 +5,14 @@ function Report (ops) {
     this.pageView = ops.pageView
     this.template = ops.template
 
-    this.model.getTopBlocked().then(() => {
+    // TODO, lookup the stored email hereish
+    // this.model.getEmail().then(() => {
         Parent.call(this, ops)
         this._setup()
-    })
+    // })
 
     this.bindEvents([
-        [this.model.store.subscribe, 'action:backgroundMessage', this.handleBackgroundMsg]
+        // [this.model.store.subscribe, 'action:backgroundMessage', this.handleBackgroundMsg]
     ])
 }
 
@@ -34,7 +35,7 @@ Report.prototype = window.$.extend({},
             if (!message || !message.action) return
 
             if (message.action === 'didResetTrackersData') {
-                this.model.reset()
+                // this.model.reset()
                 setTimeout(() => this.rerenderList(), 750)
                 this.rerenderList()
             }

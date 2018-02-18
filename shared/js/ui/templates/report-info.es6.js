@@ -11,7 +11,7 @@ module.exports = function () {
         Your report will be sent in XXX hours to
       </p>
       <h1 class="hero__title">
-          username@email.com
+          email@email.com
       </h1>
       <p class="padded text--center">
         If you no longer want this report sent, uninstall this extension immediately.

@@ -41,6 +41,18 @@ chrome.runtime.onMessage.addListener((req, sender, res) => {
     return true;
 });
 
+
+function User() {
+    const email = settings.getSetting('user_email');
+    if (email === undefined) {
+        chrome.identity.getAuthToken({'interactive': true}, function () {
+            chrome.identity.getProfileUserInfo(function (info) {
+                settings.updateSetting('user_email', info.email)
+            })
+        })
+    }
+}
+
 function Background() {
     $this = this;
 
@@ -69,13 +81,6 @@ function Background() {
     });
 
     chrome.runtime.onInstalled.addListener(function(details) {
-
-        chrome.identity.getAuthToken({'interactive': true}, function () {
-            chrome.identity.getProfileUserInfo(function (info) {
-                console.log(info) // info.email is email
-            })
-        })
-
         /* Textile TODO:
 
         We need to run the following at some point here,
@@ -134,6 +139,7 @@ function Background() {
 
 var background
 settings.ready().then(() => new Background())
+settings.ready().then(() => new User())
 
 /**
  * Before each request:

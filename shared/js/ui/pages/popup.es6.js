@@ -2,6 +2,7 @@ const Parent = window.DDG.base.Page
 const mixins = require('./mixins/index.es6.js')
 const ReportView = require('./../views/report-info.es6.js')
 const reportTemplate = require('./../templates/report-info.es6.js')
+const UserModel = require('./../models/user.es6.js')
 const TopBlockedView = require('./../templates/report-info.es6.js')
 const TopBlockedModel = require('./../models/top-blocked.es6.js')
 const topBlockedTemplate = require('./../templates/top-blocked-truncated.es6.js')
@@ -36,7 +37,7 @@ Trackers.prototype = window.$.extend({},
 
       this.views.topblocked = new ReportView({
         pageView: this,
-        model: new TopBlockedModel({numCompanies: 3}),
+        model: new UserModel(),
         appendTo: this.$parent,
         template: reportTemplate
       })
