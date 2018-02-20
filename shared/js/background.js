@@ -217,11 +217,6 @@ chrome.webRequest.onBeforeRequest.addListener(
                     thisTab.addOrUpdateTrackersBlocked(tracker);
                     chrome.runtime.sendMessage({'updateTabData': true})
 
-                    // update badge icon for any requests that come in after
-                    // the tab has finished loading
-                    if (thisTab.status === "complete") thisTab.updateBadgeIcon()
-
-
                     if (tracker.parentCompany !== 'unknown' && thisTab.statusCode === 200){
                         Companies.add(tracker.parentCompany)
                     } 

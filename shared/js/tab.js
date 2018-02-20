@@ -68,23 +68,6 @@ class Tab {
         chrome.browserAction.setIcon({path: 'img/icon_48.png', tabId: tabData.tabId})
     };
 
-    updateBadgeIcon () {
-        if (!this.site.specialDomain() ) {
-
-            if (this.site.isBroken) {
-                chrome.browserAction.setIcon({path: 'img/icon_48.png', tabId: this.id});
-            } else {
-                // let scoreIcon
-                // if (this.site.whitelisted) {
-                let scoreIcon = scoreIconLocations[this.site.score.get().before]
-                // } else {
-                //     scoreIcon = scoreIconLocations[this.site.score.get().after]
-                // }
-                chrome.browserAction.setIcon({path: scoreIcon, tabId: this.id});
-            }
-        }
-    };
-
     updateSite () {
         this.site = new Site(utils.extractHostFromURL(this.url))
         // reset badge to textile icon whenever we go to a new site

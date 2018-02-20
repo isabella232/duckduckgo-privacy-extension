@@ -96,7 +96,6 @@ chrome.tabs.onUpdated.addListener( (id, info) => {
                 }
                 tab.checkHttpsRequestsOnComplete()
                 console.info(tab.site.score)
-                tab.updateBadgeIcon()
 
                 if (tab.statusCode === 200 &&
                     !tab.site.didIncrementCompaniesData) {
